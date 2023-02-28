@@ -9,7 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
   color: #212121;
-  /* line-height: 1.5; */
+  line-height: 1.5;
 }
 
 #search-box {
@@ -65,8 +65,11 @@ body {
 
 .gallery {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .info {
     display: flex;
 }
+
+ 
