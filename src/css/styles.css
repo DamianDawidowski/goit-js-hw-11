@@ -62,3 +62,11 @@ body {
 .removeMargin {
   margin: 0;
 }
+
+.gallery {
+  display: flex;
+}
+
+.info {
+    display: flex;
+}
