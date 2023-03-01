@@ -50,7 +50,7 @@ font-size: 0.6rem;
 .info {
   display: flex;
   gap: 5px;
-  /* justify-content: space-around; */
+  justify-content: space-around;
   color: #444;
 }
 
