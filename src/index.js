@@ -25,7 +25,7 @@ form.addEventListener('submit', e => {
       const { height: cardHeight } = document
         .querySelector('.gallery')
         .firstElementChild.getBoundingClientRect();
-      lightbox().refresh();
+      // lightbox().refresh();
       window.scrollBy({
         top: cardHeight * 2,
         behavior: 'smooth',
