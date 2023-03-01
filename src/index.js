@@ -9,7 +9,23 @@ const input = document.querySelector('input');
 const searchBtn = document.querySelector('button');
 const imageGallery = document.querySelector('.gallery');
 let page = 0;
-const lightbox = () => new SimpleLightbox('.gallery a', {});
+//  let lightbox = new SimpleLightbox('.gallery a', {
+//    captionPosition: 'bottom',
+//    captionSelector: 'img',
+//    captionsData: 'alt',
+//    captionType: 'attr',
+//    captionDelay: 250,
+//  });
+
+// const lightbox = () => new SimpleLightbox('.gallery a', {
+//    captionPosition: 'bottom',
+//      captionSelector: 'img',
+//    captionsData: 'alt',
+//      captionType: 'attr',
+//     captionDelay: 250,
+//    });
+
+
 // var axios = require('axios');
 
 form.addEventListener('submit', e => {
@@ -25,25 +41,21 @@ form.addEventListener('submit', e => {
 
   imageGallery.textContent = '';
   fetchImages(`${input.value.trim()}`)
-    .then(countries => {
+    .then(images => {
       console.log('WORKS3');
       console.log(input.value);
-lightbox();
-      renderImages(countries);
+new SimpleLightbox('.gallery a');
+      renderImages(images);
 const { height: cardHeight } = document
   .querySelector('.gallery')
   .firstElementChild.getBoundingClientRect();
-
+// lightbox().refresh();
 window.scrollBy({
   top: cardHeight * 2,
   behavior: 'smooth',
 });
 
-
-
-
-
-
+ 
     })
     .catch(error => {
       Notiflix.Notify.failure(`Oops, there is no country with that name`);
@@ -64,7 +76,7 @@ function renderImages(images) {
     .map(image => {
       console.log('WORKS6');
       return `<div class="photo-card">
-        <img src=${image.webformatURL} alt=${image.tags} loading="lazy" />
+       <a class="gallery__item" href="${image.largeImageURL}"> <img src=${image.webformatURL} alt=${image.tags} loading="lazy" />
         <div class="info">
           <p class="info-item">
             <b>Likes</b>${image.likes}
@@ -108,11 +120,13 @@ window.addEventListener('scroll', () => {
   if (clientHeight + scrollTop >= scrollHeight - 5) {
     page++;
     // show the loading animation
-    fetchImages(`${input.value.trim()}`).then(countries => {
+    fetchImages(`${input.value.trim()}`).then(images => {
       console.log('WORKS3');
       console.log(input.value);
       console.log(`after scrolling current page value is ${page}`);
-      renderImages(countries);
+      renderImages(images);
+       lightbox().refresh();;
+      new SimpleLightbox('.gallery a');
     });
     setTimeout(console.log('LOAD'), 1000);
   }
