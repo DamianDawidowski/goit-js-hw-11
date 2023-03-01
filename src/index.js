@@ -8,6 +8,7 @@ const form = document.querySelector('form');
 const input = document.querySelector('input');
 const imageGallery = document.querySelector('.gallery');
 let page = 0;
+let numberOfPages = Math.ceil(name.totalHits / 40);
 
 form.addEventListener('submit', e => {
   page = 1;
@@ -80,7 +81,7 @@ window.addEventListener('scroll', () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
   if (clientHeight + scrollTop >= scrollHeight - 5) {
     page++;
-    if (page >= totalPages) {
+    if (page >= numberOfPages) {
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
