@@ -11,7 +11,8 @@ body {
   color: #212121;
   line-height: 1.5;
   display: flex;
-  justify-content: center
+  justify-content: center;
+  flex-direction: column;
 }
 
 #search-box {
