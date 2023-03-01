@@ -1,20 +1,19 @@
 import axios from 'axios';
 import './css/styles.css';
-
-// import debounce from 'lodash.debounce';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 
 const form = document.querySelector('form');
 const input = document.querySelector('input');
 const searchBtn = document.querySelector('button');
 const imageGallery = document.querySelector('.gallery');
-
-
+let page = 0;
+const lightbox = () => new SimpleLightbox('.gallery a', {});
 // var axios = require('axios');
 
-  
-
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', e => {
+  page = 1;
   console.log(input.value);
   e.preventDefault();
   if (!input.value.trim()) {
@@ -24,12 +23,27 @@ form.addEventListener('submit', (e) => {
     return;
   }
 
+  imageGallery.textContent = '';
   fetchImages(`${input.value.trim()}`)
     .then(countries => {
       console.log('WORKS3');
       console.log(input.value);
-
+lightbox();
       renderImages(countries);
+const { height: cardHeight } = document
+  .querySelector('.gallery')
+  .firstElementChild.getBoundingClientRect();
+
+window.scrollBy({
+  top: cardHeight * 2,
+  behavior: 'smooth',
+});
+
+
+
+
+
+
     })
     .catch(error => {
       Notiflix.Notify.failure(`Oops, there is no country with that name`);
@@ -44,10 +58,11 @@ function renderImages(images) {
     );
     return;
   }
+  Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
   const markup = images.hits
-     
+
     .map(image => {
-       console.log('WORKS6');
+      console.log('WORKS6');
       return `<div class="photo-card">
         <img src=${image.webformatURL} alt=${image.tags} loading="lazy" />
         <div class="info">
@@ -65,63 +80,43 @@ function renderImages(images) {
           </p>
         </div>
       </div>`;
-
-  
-      //  (extraHTML = <div class="eachimage"><img class="eachFlag"  src=${image.webformatURL} /> </div>)
-      
-    //    <h2 class="singleimageName">${image.name}</h2>
-    //    </div>
-    //  <div class="eachInfo"> <span class="eachHighlight">Capital: </span><p class="eachValue"> ${image.capital}</p></div>
-    //   <div class="eachInfo"> <span class="eachHighlight">Population: </span><p class="eachValue"> ${image.population}</p></div>
-    //    <div class="eachInfo"> <p class="eachHighlight removeMargin">Languages: </p><span class="eachValue">${image.languages[0].name};
-
-      // for (let i = 1; i < image.languages.length - 1; i++) {
-      //   extraHTML = extraHTML + `, ${image.languages[i].name};
-      // }
-
-      // extraHTML = extraHTML + ` </span></div>`;
-  
     })
 
     .join('');
-   console.log(images);
-  imageGallery.innerHTML = markup;
+  console.log(images);
+  imageGallery.insertAdjacentHTML('beforeend', markup);
 }
 
 async function fetchImages(query) {
   try {
     const response = await axios.get(
-      `https://pixabay.com/api/?key=34020653-837b1231ff9ac2e46753275a8&q=${query}&image_type=photo&orientation=hohorizontal&safesearch=true`
+      `https://pixabay.com/api/?key=34020653-837b1231ff9ac2e46753275a8&q=${query}&image_type=photo&orientation=hohorizontal&safesearch=true&page=${page}&per_page=40`
     );
     console.log(`Pixabay response is ` + response);
-    console.log( response.hits);
+    console.log(response.hits);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 }
 
+window.addEventListener('scroll', () => {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
+  setTimeout(console.log({ scrollTop, scrollHeight, clientHeight }), 1000);
 
-
-  // function fetchImages(query) {
-  // return   axios
-
-
-// async function fetchImages(query) {
-//   return await axios
-//     .get(
-//       `https://pixabay.com/api/?key=34020653-837b1231ff9ac2e46753275a8&q=${query}&image_type=photo`
-//     )
-//     .then(response => {
-//       if (!response.ok) {
-//         console.log('WORKS7');
-//         throw new Error(response.status);
-//       }
-
-//       return response.json();
-//     });
-// }
+  if (clientHeight + scrollTop >= scrollHeight - 5) {
+    page++;
+    // show the loading animation
+    fetchImages(`${input.value.trim()}`).then(countries => {
+      console.log('WORKS3');
+      console.log(input.value);
+      console.log(`after scrolling current page value is ${page}`);
+      renderImages(countries);
+    });
+    setTimeout(console.log('LOAD'), 1000);
+  }
+});
 
 //XXXXXXXXXXXXXXXX
 // 34020653-837b1231ff9ac2e46753275a8
