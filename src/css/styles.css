@@ -12,13 +12,7 @@ body {
   line-height: 1.5;
  
 }
-
-#search-box {
-  font: inherit;
-  padding: 8px;
-  max-width: 320px;
-  margin-bottom: 16px;
-}
+ 
  /* input {
  display: flex;
   justify-content: center;
@@ -69,4 +63,10 @@ img {
 
 a {
   text-decoration:none
+}
+
+.search-form {
+  margin:auto;
+  padding-bottom: 1rem;
+  background-color: blue;
 }
