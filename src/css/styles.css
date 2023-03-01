@@ -80,7 +80,10 @@ body {
  
 
 .info {
-    display: flex;
+  display: flex;
+  gap: 5px;
+  justify-content: space-around;
+  color: #444;
 }
 
  
