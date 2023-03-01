@@ -92,7 +92,7 @@ img {
         object-fit: cover;
 }
  
-info-item {
+.info-item {
    display: flex;
    flex-direction: column;
     justify-content: center;
