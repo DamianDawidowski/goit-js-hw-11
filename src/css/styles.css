@@ -92,3 +92,8 @@ img {
         object-fit: cover;
 }
  
+info-item {
+   display: flex;
+   flex-direction: column;
+    justify-content: center;
+}
