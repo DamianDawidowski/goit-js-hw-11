@@ -65,6 +65,8 @@ a {
   width: 100%;
   margin: auto;
   padding: 0.5rem 0 0.5rem;
-  background-color: blue;
+  /* background-color: blue; */
   text-align: center;
+  background-image: url(/assets/backgroundMandalas_1280.jpg);
+  background-size: cover
 }

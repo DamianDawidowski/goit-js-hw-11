@@ -20,8 +20,9 @@ form.addEventListener('submit', e => {
   imageGallery.textContent = '';
   fetchImages(`${input.value.trim()}`)
     .then(images => {
-      new SimpleLightbox('.gallery a');
+      
       renderImages(images);
+    new SimpleLightbox('.gallery a');
       const { height: cardHeight } = document
         .querySelector('.gallery')
         .firstElementChild.getBoundingClientRect();
@@ -47,7 +48,8 @@ function renderImages(images) {
   const markup = images.hits
     .map(image => {
       return `<div class="photo-card">
-       <a class="gallery__item" href="${image.largeImageURL}"> <img src=${image.webformatURL} alt=${image.tags} loading="lazy" />
+       <a class="gallery__item" href="${image.largeImageURL}"> 
+       <img src=${image.webformatURL} alt=${image.tags} loading="lazy" /></a>
         <div class="info">
           <p class="info-item">
             <b>Likes</b>${image.likes}
